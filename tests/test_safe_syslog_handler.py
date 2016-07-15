@@ -85,7 +85,7 @@ class TestSafeSysLogHandler(unittest.TestCase):
     def test_handleError_for_other_exception_shouldnt_call_retry_socketstream_connection(self, m_syslg_h, m_retry, m_is_socket, m_sys_ex):
         record = "record"
         self.handler.handleError(record)
-        assert not m_retry.called, 'LiveLogHandler.retry_socketstream_connection should not have been called'
+        assert not m_retry.called, 'SafeSysLogHandler.retry_socketstream_connection should not have been called'
 
     @patch('sys.exc_info', return_value=['', 'SOME_OTHER_ERROR', ''])
     @patch('safe_syslog_handler.handlers.SafeSysLogHandler.is_socketstream_and_not_unixsocket', return_value=True)
