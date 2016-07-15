@@ -30,7 +30,7 @@ LOGGING = {
     }
 }
 
-# using LiveLogHandler in port 5140
+# using SafeSysLogHandler in port 5140
 LOGGING['handlers'].update({
     'syslog_handlers': {
         'formatter': 'syslog',
