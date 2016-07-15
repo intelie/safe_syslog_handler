@@ -13,9 +13,6 @@ Safe Syslog Handler
         :target: https://safe-syslog-handler.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
 
-.. image:: https://pyup.io/repos/github/intelie/safe_syslog_handler/shield.svg
-     :target: https://pyup.io/repos/github/intelie/safe_syslog_handler/
-     :alt: Updates
 
 
 SafeSysLogHandler recreates the connection to a remote logging server when the connection is lost, avoiding the `[errno 32] Broken Pipe` error which would occur when using the `SysLogHandler`.
