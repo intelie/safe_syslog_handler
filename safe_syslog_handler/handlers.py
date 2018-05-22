@@ -55,3 +55,13 @@ class SafeSysLogHandler(SysLogHandler):
                     return
 
         SysLogHandler.handleError(self, record)
+
+    def format(self, record):
+        formatted = super(SafeSysLogHandler, self).format(record)
+        # When transmitting via TCP line-end chars are used by most implementations as the message terminator.
+        # If there are any of these in original message it would be transmitted as a series of malformed entries.
+        # To avoid this condition we replace the special chars with their escape sequences used by syslogd
+        if (self.is_socketstream_and_not_unixsocket()):
+            formatted = formatted.replace("\n", "#012").replace("\r", "#015")
+        return formatted
+
