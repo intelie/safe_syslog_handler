@@ -16,7 +16,7 @@ test_requirements = [
 
 setup(
     name='safe_syslog_handler',
-    version='0.1.0',
+    version='0.2.0',
     description="SafeSysLogHandler recreates the connection to a remote logging server when the connection is lost, avoiding the `[errno 32] Broken Pipe` error which would occur when using the `SysLogHandler`.",
     long_description=readme,
     author="Felipe Arruda Pontes",
@@ -44,6 +44,8 @@ setup(
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
     ],
     test_suite='tests',
     tests_require=test_requirements
