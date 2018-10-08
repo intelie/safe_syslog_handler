@@ -13,6 +13,7 @@ import errno
 import sys
 import unittest
 from collections import namedtuple
+from logging import LogRecord
 from mock import patch, Mock
 
 from safe_syslog_handler.handlers import SafeSysLogHandler
@@ -135,6 +136,21 @@ class TestSafeSysLogHandler(unittest.TestCase):
         record = 'record'
         self.handler.retry_socketstream_connection(record)
         m_sys_log_h.assert_called_once_with(self.handler, record)
+
+    def test_multiline_messages_should_be_properly_formatted(self):
+        self.handler.socktype = socket.SOCK_STREAM
+        test_messages = [
+            'something\nsomething', 'whatever\r\nend', 'a\nlot\nof\nbreaks',
+            'blank\n\n\nspaces', 'ending\n', 'ending\r\n', '\nstarting', '\r\nstarting'
+        ]
+        expected = [
+            'something#012something', 'whatever#015#012end', 'a#012lot#012of#012breaks',
+            'blank#012#012#012spaces', 'ending#012', 'ending#015#012', '#012starting', '#015#012starting'
+        ]
+        
+        for i, message in enumerate(test_messages):
+            formatted = self.handler.format(LogRecord('', 1, '', 1, message, None, None))
+            assert formatted == expected[i], 'Formatted message = "' + formatted + '", expected = "' + expected[i] + '"'
 
 if __name__ == '__main__':
     sys.exit(unittest.main())
